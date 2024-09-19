@@ -1,0 +1,15 @@
+name: "pomerium-cli"
+arch: "amd64"
+platform: "linux"
+version: "0.23.0"
+release: 2
+section: "default"
+priority: "extra"
+provides:
+  - pomerium-cli
+description: "pomerium cli"
+vendor: "cpg314"
+maintainer: "cpg314 <44120267+cpg314@users.noreply.github.com>"
+contents:
+  - src: ./bin/pomerium-cli
+    dst: /usr/local/bin/pomerium-cli
