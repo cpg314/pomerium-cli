@@ -15,10 +15,16 @@ import (
 	"github.com/pomerium/cli/authclient"
 )
 
+var expiryHours uint
+
 func init() {
 	addBrowserFlags(kubernetesExecCredentialCmd)
 	addServiceAccountFlags(kubernetesExecCredentialCmd)
 	addTLSFlags(kubernetesExecCredentialCmd)
+
+	flags := kubernetesExecCredentialCmd.Flags()
+	flags.UintVar(&expiryHours, "expiry-hours", 120,
+		"JWT expiry (hours)")
 	kubernetesCmd.AddCommand(kubernetesExecCredentialCmd)
 	kubernetesCmd.AddCommand(kubernetesFlushCredentialsCmd)
 	rootCmd.AddCommand(kubernetesCmd)
@@ -108,7 +114,7 @@ func parseToken(rawjwt string) (*ExecCredential, error) {
 
 	expiresAt := time.Unix(claims.Expiry, 0)
 	if claims.Expiry == 0 {
-		expiresAt = time.Now().Add(7 * 24 * time.Hour)
+		expiresAt = time.Now().Add(time.Duration(expiryHours) * time.Hour)
 	}
 
 	return &ExecCredential{
