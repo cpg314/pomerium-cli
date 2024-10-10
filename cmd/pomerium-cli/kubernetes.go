@@ -23,7 +23,7 @@ func init() {
 	addTLSFlags(kubernetesExecCredentialCmd)
 
 	flags := kubernetesExecCredentialCmd.Flags()
-	flags.UintVar(&expiryHours, "expiry-hours", 120,
+	flags.UintVar(&expiryHours, "expiry-hours", 110,
 		"JWT expiry (hours)")
 	kubernetesCmd.AddCommand(kubernetesExecCredentialCmd)
 	kubernetesCmd.AddCommand(kubernetesFlushCredentialsCmd)
